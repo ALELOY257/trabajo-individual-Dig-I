@@ -1,20 +1,20 @@
-module acc (clk , A, add, rst, pp);
-  input clk;
-  input [3:0] A;
-  input add;
-  input rst;
-  output reg [3:0] pp;
+module acc #(parameter WIDTH = 8) (
+    input clk,
+    input [WIDTH-1:0] A,
+    input add,
+    input rst,
+    output reg [WIDTH-1:0] pp
+);
 
 initial pp = 0;
 
-always @(negedge clk)
-  if (rst)
-   pp <= 4'h0;
-  else
-     begin
-      if (add)
+always @(posedge clk) begin
+    if (rst)
+        pp <= {WIDTH{1'b0}}; 
+    else if (add)
         pp <= pp + A;
-      else
-        pp <= pp;
-     end
+end
 endmodule
+
+
+

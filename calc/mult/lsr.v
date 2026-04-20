@@ -1,18 +1,17 @@
-module lsr (clk , in_A , shift , load , s_A);
+module lsr #(parameter WIDTH=4)(clk , in_A , shift , load , s_A);
   input clk;
-  input [4:0]in_A;
+  input [WIDTH-1:0]in_A;
   input load;
   input shift;
-  output reg [4:0]s_A;
+  output reg [WIDTH-1:0]s_A;
 
-always @(negedge clk)
+always @(posedge clk)
   if(load)
-     s_A = in_A ;
+     s_A <= in_A ;
   else
    begin
     if(shift)
-//      s_A <= s_A << 1 ;
-      s_A[4:0] <= {s_A[3:0], 1'b0};
+      s_A <= {s_A[WIDTH-2:0], 1'b0};
     else
       s_A <= s_A;
    end

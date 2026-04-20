@@ -1,20 +1,15 @@
-module rsr (
+module rsr #(parameter WIDTH = 4) (
     input clk,
-    input [4:0]in_B, 
+    input [WIDTH-1:0] in_B, 
     input shift, 
     input load, 
-    output reg [4:0]s_B
-    );
+    output reg [WIDTH-1:0] s_B
+);
 
-    always @(negedge clk)begin
+    always @(posedge clk) begin 
         if (load)
-            s_B = in_B;
-        else begin
-            if (shift)
-                s_B <= s_B >> 1;
-            else
-                s_B <= s_B
-        end
+            s_B <= in_B; 
+        else if (shift)
+            s_B <= s_B >> 1;
     end
-
 endmodule

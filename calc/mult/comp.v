@@ -1,5 +1,5 @@
-module comp(B, z);
-  input [15:0]B;
+module comp #(parameter WIDTH = 4)(B, z);
+  input [WIDTH-1:0] B;
   output reg z;
 
   always@(*)

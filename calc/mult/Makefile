@@ -1,5 +1,11 @@
-TARGET = comp
-OBJS   = ${TARGET}.v
+TARGET= top
+OBJS  = acc.v \
+		comp.v \
+		control_mult.v \
+		lsr.v \
+		rsr.v \
+		top.v
+
 ICE40_SIM_CELLS=$(shell yosys-config --datdir/ecp5/cells_sim.v)
 
 sim:
