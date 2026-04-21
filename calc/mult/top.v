@@ -12,13 +12,13 @@ module top(
     parameter RES_WIDTH = A_WIDTH + B_WIDTH;
 
     wire shift, reset, add, z;
-    wire [A_WIDTH-1:0] w_A;
+    wire [RES_WIDTH-1:0] w_A;
     wire [B_WIDTH-1:0] w_B;
 
 
     acc #(.WIDTH(RES_WIDTH)) acc_instance (
         .clk(clk), 
-        .A({{B_WIDTH{1'b0}}, w_A}), 
+        .A(w_A),
         .add(add), 
         .rst(reset), 
         .pp(pp)
@@ -39,7 +39,7 @@ module top(
 
     lsr #(.WIDTH(A_WIDTH)) lsr_instance (
         .clk(clk), 
-        .in_A(A), 
+        .in_A({{B_WIDTH{1'b0}}, A}),
         .shift(shift), 
         .load(reset), 
         .s_A(w_A)
@@ -50,7 +50,7 @@ module top(
         .rst(rst), 
         .lsb_B(w_B[0]), 
         .init(init), 
-        .z(z), 
+        .z(z),
         .done(done), 
         .sh(shift), 
         .reset(reset), 

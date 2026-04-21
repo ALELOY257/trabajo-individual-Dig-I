@@ -1,21 +1,22 @@
 TARGET= top
-OBJS  = acc.v \
-		comp.v \
-		control_mult.v \
-		lsr.v \
-		rsr.v \
+
+OBJS  = internal/acc.v \
+		internal/comp.v \
+		internal/control_mult.v \
+		internal/lsr.v \
+		internal/rsr.v \
 		top.v
 
 ICE40_SIM_CELLS=$(shell yosys-config --datdir/ecp5/cells_sim.v)
 
 sim:
 	rm -f a.out *.vcd
-	iverilog  -DBENCH $(TARGET)_TB.v $(OBJS)
+	iverilog  -DBENCH testbenchs/$(TARGET)_TB.v $(OBJS)
 	vvp a.out
 	gtkwave $(TARGET)_TB.vcd
 sim_post_syn:
 	yosys -v3 -l synth.log -p 'synth_ecp5 -top $(TARGET) -json $(TARGET).json; write_verilog -attr2comment $(TARGET)_synth.v' $(OBJS)
-	iverilog  $(TARGET)_TB.v $(TARGET)_synth.v $(ICE40_SIM_CELLS) 
+	iverilog  testbenchs/$(TARGET)_TB.v $(TARGET)_synth.v $(ICE40_SIM_CELLS) 
 	vvp a.out
 	gtkwave $(TARGET)_TB.vcd
 svg: $(OBJS)
