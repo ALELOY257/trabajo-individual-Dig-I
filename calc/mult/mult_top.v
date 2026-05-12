@@ -1,4 +1,4 @@
-module top(
+module mult_top(
     input clk,
     input rst, 
     input init, 
