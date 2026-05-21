@@ -7,7 +7,7 @@ module ca2_sub #(
 );
 
     always @(*) begin
-        ca2_res = ((~divisor) + 1'b1) - helper;
+        ca2_res = helper -((~divisor) + 1'b1);
     end
 
 endmodule

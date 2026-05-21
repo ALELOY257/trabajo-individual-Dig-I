@@ -1,5 +1,5 @@
 module comp_helper #(parameter WIDTH=8)(
-    input [WIDHT-1:0] helper_ca2;
+    input [WIDTH-1:0] helper_ca2;
     output reg v;
 );
     always@(*)
