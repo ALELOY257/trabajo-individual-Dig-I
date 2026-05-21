@@ -6,7 +6,7 @@ module counter #(parameter WIDTH=8)(
     input [WIDTH-1:0] data_in,
     output reg [WIDTH-1:0] count_out
 );
-    always @(posedge clk) begin
+    always @(negedge clk) begin
         if (rst)
             count_out <= {WIDTH{1'b0}};
         else if (load)

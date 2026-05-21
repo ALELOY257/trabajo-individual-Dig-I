@@ -5,7 +5,7 @@ module lsb_replace #(parameter WIDTH = 8)(
     input replacing_value,
     output reg [WIDTH-1:0] generic_output
 );
-    always @(posedge clk) begin
+    always @(negedge clk) begin
         if (rst) 
             generic_output <= {WIDTH{1'b0}};
         else if (shift) 
