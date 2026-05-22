@@ -1,21 +1,49 @@
-module div_top (
+module div_top #(parameter WIDTH=8)(
     input clk,
     input rst,
     input init,
-    input [DND_WIDTH-1:0] dividend,
-    input [DSR_WIDTH-1:0] divisor,
+    input [WIDTH-1:0] dividend,
+    input [WIDTH-1:0] divisor,
     output [RES_WIDTH-1:0] res,
     output done
 );
-    parameter DND_WIDTH = 16;
-    parameter DSR_WIDTH = 16;
-    parameter RES_WIDTH = DND_WIDTH + DSR_WIDTH;
+    parameter RES_WIDTH = 2*WIDTH;
 
-    wire helper;
-    wire sh;
+    wire replacing_bit, LD, DECC, SHHE, SHRES, SHDI, LDHE, v, z;
+    wire [WIDTH-1:0]helper, ca2_res, dividend_wire;
 
-    lsb_replace #(.WIDTH(RES_WIDTH)) lsb_replace0(
-        .clk(clk), .rst(rst), .shift()
+    control_divisor control(
+        .clk(clk), .init(init), .v(v), .z(z),
+        .replacing_bit(replacing_bit), .LD(LD), .DECC(DECC), .SHHE(SHHE), .SHRES(SHRES), .SHDI(SHDI), .LDHE(LDHE), .done(done)
     );
+
+    lsb_replace #(WIDTH) helper_reg(
+        .clk(clk), .rst(rst), .shift(SHHE), .replacing_value(dividend[0]),
+        .generic_output(helper)
+    );
+
+    lsr #(WIDTH) dividend_shift(
+        .clk(clk), .dividend(dividend), .load(LD), .shift(SHDI),
+        .dividend_out(dividend_wire)
+    );
+
+    ca2_sub #(WIDTH) ca2sub(
+        .divisor(divisor), .helper(helper),
+        .ca2_res(ca2_res)
+    );
+
+    comp_helper #(WIDTH) helpercomparator(
+        .reg_ca2(ca2_res),
+        .v(v)
+    );
+
+    lsb_replace #(WIDTH) result_reg(
+        .clk(clk), .rst(rst), .shift(SHRES), .replacing_value(replacing_bit),
+        .generic_output(res) 
+    );
+
+    
+
+
 
 endmodule

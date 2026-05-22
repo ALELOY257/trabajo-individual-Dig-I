@@ -1,4 +1,4 @@
-module control_mult(
+module control_divisor(
     input clk,
 
     input rst,
