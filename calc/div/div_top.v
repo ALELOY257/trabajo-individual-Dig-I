@@ -4,26 +4,30 @@ module div_top #(parameter WIDTH=8)(
     input init,
     input [WIDTH-1:0] dividend,
     input [WIDTH-1:0] divisor,
-    output [RES_WIDTH-1:0] res,
+    output [(2*WIDTH)-1:0] res,
     output done
 );
-    parameter RES_WIDTH = 2*WIDTH;
+    localparam RES_WIDTH = 2*WIDTH;
 
-    wire replacing_bit, LD, DECC, SHHE, SHRES, SHDI, LDHE, SUBHE, v, z;
-    wire [WIDTH-1:0]helper, ca2_res, dividend_wire;
+    wire replacing_bit, LD, DECC, SHHE, SHRES, SHDI, LDHE, v, z;
+    wire [WIDTH-1:0] helper;
+    wire [WIDTH-1:0] ca2_res;
+    wire [WIDTH-1:0] dividend_wire;
 
     control_divisor control(
-        .clk(clk), .init(init), .v(v), .z(z),
-        .replacing_bit(replacing_bit), .LD(LD), .DECC(DECC), .SHHE(SHHE), .SHRES(SHRES), .SHDI(SHDI), .LDHE(LDHE), .done(done)
+        .clk(clk), .rst(rst), .init(init), .v(v), .z(z),
+        .replacing_bit(replacing_bit), .LD(LD), .DECC(DECC), 
+        .SHHE(SHHE), .SHRES(SHRES), .SHDI(SHDI), .LDHE(LDHE), .done(done)
     );
 
-    lsb_replace #(WIDTH) helper_reg1(
-        .clk(clk), .rst(rst), .shift(SHHE), .replacing_value(dividend[0]),
-        .generic_output(helper)
+    helper_accumulator #(WIDTH) helper_reg_inst(
+        .clk(clk), .rst(rst), .shift(SHHE), .ldhe(LDHE), .ld(LD),
+        .replacing_value(dividend_wire[WIDTH-1]), 
+        .sub_input(ca2_res), .helper_out(helper)
     );
 
     lsr #(WIDTH) dividend_shift(
-        .clk(clk), .dividend(dividend), .load(LD), .shift(SHDI),
+        .clk(clk), .load(LD), .shift(SHDI), .dividend(dividend),
         .dividend_out(dividend_wire)
     );
 
@@ -33,24 +37,23 @@ module div_top #(parameter WIDTH=8)(
     );
 
     comp_helper #(WIDTH) helpercomparator(
-        .reg_ca2(ca2_res),
-        .v(v)
+        .reg_ca2(ca2_res), .v(v)
     );
 
-    lsb_replace #(WIDTH) result_reg(
-        .clk(clk), .rst(rst), .shift(SHRES), .replacing_value(replacing_bit),
-        .generic_output(res) 
-    );
+    reg [RES_WIDTH-1:0] res_reg;
+    always @(posedge clk or posedge rst) begin
+        if (rst)          res_reg <= 0;
+        else if (LD)      res_reg <= 0;
+        else if (SHRES)   res_reg <= {res_reg[RES_WIDTH-2:0], replacing_bit};
+    end
+    assign res = res_reg;
 
-    substractor #(WIDTH) helper_reg2(
-        .clk(clk), .subhe(SUBHE),
-        .helper_reg(helper)
-    );
-
-    counter #(WIDTH) endcounter(
-        .clk(clk), .rst(rst), .dec(DECC), .load(LD), data_in(WIDTH[7:0]),
-        .count_out(z)
-    );
-
+    reg [WIDTH-1:0] count_out;
+    always @(posedge clk or posedge rst) begin
+        if (rst)         count_out <= 0;
+        else if (LD)     count_out <= WIDTH; 
+        else if (DECC)   count_out <= count_out - 1;
+    end
+    assign z = (count_out == 0);
 
 endmodule

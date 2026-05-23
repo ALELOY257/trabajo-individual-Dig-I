@@ -3,8 +3,8 @@ TARGET= div_top
 OBJS  = internal/ca2_sub.v \
 		internal/comp_helper.v \
 		internal/control_divisor.v \
-		internal/counter.v \
-		internal/lsb_replace.v \
+		internal/helper_accumulator.v \
+		internal/lsr.v \
 		div_top.v
 
 ICE40_SIM_CELLS=$(shell yosys-config --datdir/ecp5/cells_sim.v)

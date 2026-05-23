@@ -1,62 +1,90 @@
 `timescale 1ns / 1ps
 
-module division_tb();
+module div_top_tb;
 
-    parameter WIDTH = 8;
-    parameter CLK_PERIOD = 10;
+    reg clk;
+    reg rst;
+    reg init;
+    reg [7:0] dividend;
+    reg [7:0] divisor;
 
-    reg clk, rst, init;
-    reg [WIDTH-1:0] dividend_in, divisor_in;
-    wire [WIDTH-1:0] res_out;
+    wire [15:0] res;
     wire done;
 
-    divisor_top #(WIDTH) uut (
-        .clk(clk), .rst(rst), .start(init),
-        .dividend(dividend_in), .divisor(divisor_in),
-        .res(res_out), .done(done)
+    div_top #(.WIDTH(8)) uut (
+        .clk(clk),
+        .rst(rst),
+        .init(init),
+        .dividend(dividend),
+        .divisor(divisor),
+        .res(res),
+        .done(done)
     );
 
-    initial clk = 0;
-    always #(CLK_PERIOD/2) clk = ~clk;
-
-    // Task: run one division and print result
-    task run_test;
-        input [WIDTH-1:0] dividend;
-        input [WIDTH-1:0] divisor;
-        input [WIDTH-1:0] expected;
-        input integer test_num;
-        begin
-            // If done is still high from last run, wait for it to fall
-            if (done) @(negedge done);
-
-            dividend_in = dividend;
-            divisor_in  = divisor;
-            init = 1;
-            #(CLK_PERIOD);
-            init = 0;
-
-            wait(done);
-            $display("Test %0d: %0d / %0d | Result: %0d (Expected: %0d) %s",
-                test_num, dividend, divisor, res_out, expected,
-                (res_out == expected) ? "PASS" : "FAIL");
-        end
-    endtask
+    always begin
+        #10 clk = ~clk;
+    end
 
     initial begin
         $dumpfile("div_top_TB.vcd");
-        $dumpvars(0, division_tb);
+        $dumpvars(0, div_top_tb);
 
-        rst = 1; init = 0;
-        dividend_in = 0; divisor_in = 0;
-        #(CLK_PERIOD * 2);
+        clk = 0;
+        rst = 1;
+        init = 0;
+        dividend = 0;
+        divisor = 0;
+
+        #40;
         rst = 0;
-        #(CLK_PERIOD);
+        #20;
 
-        run_test(8'd20,  8'd4,  8'd5,  1);
-        run_test(8'd100, 8'd10, 8'd10, 2);
-        run_test(8'd7,   8'd2,  8'd3,  3);
+        // ---------------------------------------------------------
+        // TEST CASE 1: 8 / 3 
+        // ---------------------------------------------------------
+        $display("[TB] Starting Test Case 1: 8 / 3");
+        dividend = 8'd8;
+        divisor  = 8'd3;
+        init     = 1;     
+        #20;
+        init     = 0;
 
-        #(CLK_PERIOD * 10);
+        wait(done == 1);
+        $display("[TB] Test Case 1 Finished! Result (Quotient) = %d", res);
+        
+        #100; 
+
+        // ---------------------------------------------------------
+        // TEST CASE 2: 45 / 5
+        // ---------------------------------------------------------
+        $display("[TB] Starting Test Case 2: 45 / 5");
+        dividend = 8'd45;
+        divisor  = 8'd5;
+        init     = 1;
+        #20;
+        init     = 0;
+
+        wait(done == 1);
+        $display("[TB] Test Case 2 Finished! Result (Quotient) = %d", res);
+        
+        #100;
+
+        // ---------------------------------------------------------
+        // TEST CASE 3: 255 / 10 
+        // ---------------------------------------------------------
+        $display("[TB] Starting Test Case 3: 255 / 10");
+        dividend = 8'd255;
+        divisor  = 8'd10;
+        init     = 1;
+        #20;
+        init     = 0;
+
+        wait(done == 1);
+        $display("[TB] Test Case 3 Finished! Result (Quotient) = %d", res);
+
+
+        #200;
+        $display("[TB] All tests completed.");
         $finish;
     end
 
