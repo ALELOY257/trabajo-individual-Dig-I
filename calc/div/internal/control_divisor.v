@@ -13,6 +13,7 @@ module control_divisor(
     output reg SHRES,
     output reg SHDI,
     output reg LDHE,
+    output reg SUBHE,
     output reg done
 );  
     parameter START = 3'b000;
@@ -26,7 +27,6 @@ module control_divisor(
 
     reg [2:0] state, next_state;
     reg [4:0] done_count;
-    reg [8:0] count;
 
     always @(posedge clk) begin
         if (rst) begin
@@ -53,6 +53,7 @@ module control_divisor(
         SHRES=0;
         SHDI=0;
         LDHE=0;
+        SUBHE=0;
 
         case (state)begin
             START: begin
@@ -84,6 +85,7 @@ module control_divisor(
             end
             CORR1: begin
                 SHRES=1;
+                SUBHE=1;
                 replacing_bit=1;
                 next_state=CHECKCOUNT;
             end

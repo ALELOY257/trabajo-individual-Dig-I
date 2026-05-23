@@ -9,7 +9,7 @@ module div_top #(parameter WIDTH=8)(
 );
     parameter RES_WIDTH = 2*WIDTH;
 
-    wire replacing_bit, LD, DECC, SHHE, SHRES, SHDI, LDHE, v, z;
+    wire replacing_bit, LD, DECC, SHHE, SHRES, SHDI, LDHE, SUBHE, v, z;
     wire [WIDTH-1:0]helper, ca2_res, dividend_wire;
 
     control_divisor control(
@@ -17,7 +17,7 @@ module div_top #(parameter WIDTH=8)(
         .replacing_bit(replacing_bit), .LD(LD), .DECC(DECC), .SHHE(SHHE), .SHRES(SHRES), .SHDI(SHDI), .LDHE(LDHE), .done(done)
     );
 
-    lsb_replace #(WIDTH) helper_reg(
+    lsb_replace #(WIDTH) helper_reg1(
         .clk(clk), .rst(rst), .shift(SHHE), .replacing_value(dividend[0]),
         .generic_output(helper)
     );
@@ -42,8 +42,15 @@ module div_top #(parameter WIDTH=8)(
         .generic_output(res) 
     );
 
-    
+    substractor #(WIDTH) helper_reg2(
+        .clk(clk), .subhe(SUBHE),
+        .helper_reg(helper)
+    );
 
+    counter #(WIDTH) endcounter(
+        .clk(clk), .rst(rst), .dec(DECC), .load(LD), data_in(WIDTH[7:0]),
+        .count_out(z)
+    );
 
 
 endmodule
