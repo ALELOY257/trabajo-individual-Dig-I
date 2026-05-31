@@ -9,7 +9,7 @@ module res_reg #(
     output reg  [WIDTH-1:0] res_out
 );
 
-    always @(posedge clk or posedge rst) begin
+    always @(posedge clk) begin
         if (rst) begin
             res_out <= {WIDTH{1'b0}};
         end else if (LD) begin

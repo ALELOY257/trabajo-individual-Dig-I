@@ -13,7 +13,7 @@ module s_reg #(
 
     assign s_top_bits = r_s[WIDTH-1:WIDTH-2];
 
-    always @(posedge clk or posedge rst) begin
+    always @(posedge clk) begin
         if (rst) begin
             r_s <= {WIDTH{1'b0}};
         end else if (LD) begin
