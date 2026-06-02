@@ -1,7 +1,7 @@
 module res_reg #(parameter WIDTH=12)(
     input wire clk,
     input wire rst,
-    input wire LD_1,
+    input wire LD,
     input wire LD_2,
     input wire LD_3,
     input wire LD_4,
@@ -18,7 +18,7 @@ module res_reg #(parameter WIDTH=12)(
     always @(posedge clk) begin //tengo que testear esto, porque es para evitar una race condition
         if (rst)
             res_out <= {WIDTH{1'b0}};
-        else if (LD_1)
+        else if (LD)
             res_out <= {WIDTH{1'b0}};
         else if (SHRES)
             res_out <= {res_out[WIDTH-2:0], replacing_bit};

@@ -4,7 +4,7 @@ module bcd_in_reg #(parameter WIDTH = 8)(
     input wire LD,
     input wire SHIN,
     input wire [WIDTH-1:0] bcd_in,
-    output wire [1:0] bcd_in_msb
+    output wire bcd_in_msb
 );
 
     reg [WIDTH-1:0] r_s;
