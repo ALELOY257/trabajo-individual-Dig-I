@@ -49,8 +49,13 @@ module bin2bcd_top_TB;
         #20;
 
         // 3. Test case 1: Convert 255
-        $display("Starting conversion for 255 (11111111)...");
-        bcd_in = 8'd255;
+        // $display("Starting conversion for 255 (11111111)...");
+        // bcd_in = 8'd255;
+        // init = 1;
+        // #CLK_PERIOD;
+        // init = 0;
+        $display("Starting conversion for 97 (01100001)...");
+        bcd_in = 8'd97;
         init = 1;
         #CLK_PERIOD;
         init = 0;

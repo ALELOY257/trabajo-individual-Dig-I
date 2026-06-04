@@ -8,7 +8,7 @@ module contador #(parameter WIDTH=8)(
 );
     reg [WIDTH-1:0] count_reg;
 
-    assign z = (count_reg == 0) ? 1'b1 : 1'b0;
+    assign z = (count_reg == 4'd1) ? 1'b1 : 1'b0;
 
     always @(posedge clk) begin
         if (rst)

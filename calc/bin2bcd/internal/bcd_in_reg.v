@@ -9,7 +9,7 @@ module bcd_in_reg #(parameter WIDTH = 8)(
 
     reg [WIDTH-1:0] r_s;
 
-    assign bcd_in_msb = r_s[WIDTH-1:WIDTH-2];
+    assign bcd_in_msb = r_s[WIDTH-1];
 
     always @(posedge clk) begin
         if (rst)
