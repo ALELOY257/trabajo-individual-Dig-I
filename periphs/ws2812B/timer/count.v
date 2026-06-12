@@ -13,7 +13,7 @@ always @(posedge clk) begin
     if (rst) begin
         count_out <= {WIDTH{1'b0}};
     end else if (load) begin
-        count_out <= data_in;    // Load external value
+        count_out <= data_in;    
     end else if (inc) begin
         count_out <= count_out + 1'b1;
     end
