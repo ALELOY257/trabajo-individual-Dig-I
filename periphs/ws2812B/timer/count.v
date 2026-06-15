@@ -9,7 +9,7 @@ module count #(
     output reg [WIDTH-1:0] count_out
 );
 
-always @(posedge clk) begin
+always @(negedge clk) begin
     if (rst) begin
         count_out <= {WIDTH{1'b0}};
     end else if (load) begin

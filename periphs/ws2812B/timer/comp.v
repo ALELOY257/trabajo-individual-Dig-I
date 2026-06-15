@@ -4,5 +4,4 @@ module comp #(parameter WIDTH=8)(
     output wire v
 );
     assign v = (a==b) ? 1'b1 : 1'b0;
-
 endmodule
