@@ -133,6 +133,7 @@ module control_timer(
             end
 
             CHECKCOUNTOUTPER: begin
+                sel_tim=3;
             end
             // rama der del diagrama - doesnt send data
             RESACT: begin

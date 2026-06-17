@@ -75,7 +75,7 @@ module ws_top_TB;
    initial begin: TEST_CASE
      $dumpfile("ws_top_TB.vcd");
      $dumpvars(0, uut); // Use level 0 for dumping all signals in uut
-     #(60000) $finish;
+     #(250000) $finish;
    end
 
 endmodule

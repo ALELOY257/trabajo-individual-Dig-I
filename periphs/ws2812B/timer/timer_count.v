@@ -16,7 +16,10 @@ always @(negedge clk) begin
         count_out <= data_in;    
     end else if (inc) begin
         count_out <= count_out + 1'b1;
+    end else begin
+            count_out <= count_out;
     end
+
 end 
 
 endmodule
