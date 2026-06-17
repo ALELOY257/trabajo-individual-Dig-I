@@ -1,10 +1,14 @@
-TARGET= timer_top
+TARGET= ws_top
 
-OBJS  = comp.v \
-		timer_count.v \
-		mux.v \
-		timer_control.v \
-		timer_top.v
+OBJS  = lsr.v \
+		count.v \
+		control_ws.v \
+		ws_top.v \
+		../timer/timer_top.v \
+		../timer/comp.v \
+		../timer/timer_count.v \
+		../timer/mux.v \
+		../timer/timer_control.v
 
 ICE40_SIM_CELLS=$(shell yosys-config --datdir/ecp5/cells_sim.v)
 

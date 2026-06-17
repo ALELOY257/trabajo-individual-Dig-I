@@ -2,8 +2,8 @@ module lsr(
     input clk,
     input ld,
     input sh,
-    input rgb_in,
-    output reg rgb_out
+    input [23:0]rgb_in,
+    output reg [23:0]rgb_out
 );
 
     always @(negedge clk) begin

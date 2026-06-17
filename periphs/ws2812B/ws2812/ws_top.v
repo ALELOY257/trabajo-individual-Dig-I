@@ -12,8 +12,8 @@ module ws_top(
     wire DEC, z;
     wire init_t, done_t;
 
-    lsr u_lsr(.clk(clk), .ld(LD) .sh(SH), .rgb_in(rgb),
-            .rgb_msb(rgb_out));
+    lsr u_lsr(.clk(clk), .ld(LD), .sh(SH), .rgb_in(rgb),
+            .rgb_out(rgb_out));
 
     count u_count(.clk(clk), .ld(LD), .dec(DEC),
                     .z(z));

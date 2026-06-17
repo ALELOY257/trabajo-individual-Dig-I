@@ -4,11 +4,11 @@ module control_ws(
     input init,
     input done_t,
     input z,
-    output SH,
-    output INIT_T,
-    output DEC,
-    output LD,
-    output DONE
+    output reg SH,
+    output reg INIT_T,
+    output reg DEC,
+    output reg LD,
+    output reg DONE
 );
     // 7 estados
     parameter START = 3'b000;

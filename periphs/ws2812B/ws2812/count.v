@@ -2,7 +2,7 @@ module count(
     input clk,
     input ld,
     input dec,
-    output z
+    output reg z
 );
 
     reg [4:0]count;

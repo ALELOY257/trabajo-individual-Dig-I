@@ -1,4 +1,4 @@
-module count #(
+module timer_count #(
     parameter WIDTH = 8  
 )(
     input clk,

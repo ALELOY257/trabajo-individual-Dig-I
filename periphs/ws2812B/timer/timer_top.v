@@ -21,7 +21,7 @@ module timer_top(
     
 
 
-    count u_count(.clk(clk), .rst(rst), .load(), .data_in(), .inc(inc)
+    timer_count #(.WIDTH(11)) u_count(.clk(clk), .rst(rst), .load(), .data_in(), .inc(inc)
     , .count_out(count_out));
 
     mux u_mux(.sel_tim(sel_tim), .T0H(T0H), .T1H(T1H), .RES(RES), .PER(PER)
