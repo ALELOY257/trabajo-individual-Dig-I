@@ -101,7 +101,7 @@ module control_ws_array(
             end
 
             FINISH: begin
-                
+                done=1;
             end
         endcase
     end

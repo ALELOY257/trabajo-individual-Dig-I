@@ -1,6 +1,6 @@
 module led_mem(
     input clk,
-    input addr,
+    input [7:0]addr,
     output reg [23:0]rgb
 );
     reg [23:0] MEM [0: (2**8 - 1)];
@@ -9,7 +9,7 @@ module led_mem(
     end
 
     always @(negedge clk) begin
-        data_r <= MEM[address];
+        rgb <= MEM[addr];
     end
 
 endmodule

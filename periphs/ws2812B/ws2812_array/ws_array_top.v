@@ -4,18 +4,18 @@ module ws_array_top(
     input init_m,
     input rst_cmd,
     output dout,
-    output done_m, 
+    output done_m
 );
-
-    wire rst, init_led, inc, addr;
-
-    wire [23:0]rgb,
+    parameter N_LEDS = 2**8;
+    wire rst, init_led, inc;
+    wire [7:0]addr;
+    wire [23:0]rgb;
 
     wire done_led;
 
     wire z;
 
-    wire [15:0]N_LEDS;
+
 
     count_addr u_count_addr(
         .clk(clk), .rst(rst), .inc(inc),
@@ -32,8 +32,8 @@ module ws_array_top(
         .dout(dout), .done(done_led)
     );
 
-    comp u_comp( // sirve exactamente el mismo del timer
-        .a(N_LEDS), .b(addr),
+    comp #(.WIDTH(8)) u_comp( // sirve exactamente el mismo del timer
+        .a(N_LEDS-1), .b(addr),
         .v(z)
     );
 
