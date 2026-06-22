@@ -6,14 +6,14 @@ module bin2bcd_top #(
     input wire rst,
     input wire init,
     input wire [WIDTH-1:0] bcd_in,
-    output wire [11:0] res, // Corrected width for 3 BCD digits
+    output wire [11:0] res, 
     output wire done
 );
     wire LD, SHIN, SHRES, DECC;
     wire LD_2, LD_3, LD_4;
     wire v_1, v_2, v_3 ;
     wire z;
-    wire [3:0] added_slice_11_8, added_slice_7_4, added_slice_3_0; // Corrected width
+    wire [3:0] added_slice_11_8, added_slice_7_4, added_slice_3_0; 
     wire bcd_in_msb;
     wire replacing_bit; 
 
