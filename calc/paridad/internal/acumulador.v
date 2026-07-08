@@ -1,4 +1,4 @@
-module acumulador #(parameter WIDTH)(
+module acumulador #(parameter WIDTH=8)(
     input clk,
     input rst,
     input ADDACC,
@@ -10,6 +10,5 @@ module acumulador #(parameter WIDTH)(
         else if (ADDACC)
             parcheck <= parcheck + 1;
         
-
     end 
 endmodule

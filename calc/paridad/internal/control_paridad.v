@@ -54,7 +54,7 @@ module control_paridad(
 
             CHECKCOUNT: begin 
                 if (z) next_state = FINISH;
-                else CHECKPARLSB;
+                else next_state = CHECKPARLSB;
             end
 
             FINISH: begin

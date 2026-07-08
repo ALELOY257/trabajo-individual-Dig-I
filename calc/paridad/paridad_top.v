@@ -6,10 +6,10 @@ module paridad_top #(parameter WIDTH=8)(
     output wire done
 );
     wire v, z;
-    wire LD, SH, ADDACC, DECC
-    reg [WIDTH-1:0]par_reg, parcheck;
+    wire LD, SH, ADDACC, DECC;
+    wire [WIDTH-1:0]par_reg, parcheck;
 
-    assign res <= parcheck[0]; // 
+    assign res = parcheck[0];  
 
     control_paridad u_control(
         .clk(clk), .rst(rst), .v(v), .z(z),
