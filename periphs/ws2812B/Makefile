@@ -1,4 +1,4 @@
-TARGET= ws_2812_upload
+TARGET= ws2812_upload
 
 OBJS  = ws2812_array/control_ws_array.v \
 		ws2812_array/count_addr.v \
@@ -13,7 +13,7 @@ OBJS  = ws2812_array/control_ws_array.v \
 		timer/timer_count.v \
 		timer/mux.v \
 		timer/timer_control.v \
-		ws_2812_upload.v
+		ws2812_upload.v
 
 ICE40_SIM_CELLS=$(shell yosys-config --datdir/ecp5/cells_sim.v)
 

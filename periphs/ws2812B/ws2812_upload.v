@@ -2,7 +2,7 @@ module ws2812_upload(
     input reset,
     input clk,
     output dout,
-) 
+);
     ws_array_top u_ws_array(
         .clk(clk),
         .reset(!reset),
