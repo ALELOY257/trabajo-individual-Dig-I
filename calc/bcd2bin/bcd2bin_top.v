@@ -15,9 +15,9 @@ module bcd2bin_top #(
     wire [WIDTH-1:0] bcd_out;
 
     wire [SLICE_WIDTH-1:0] added_slice_11_8, added_slice_7_4, added_slice_3_0;
-    control_bcd2bin u_control(
+    control_bin2bcd u_control(
         .clk(clk), .rst(rst), .init(init), .v_1(v_1), .v_2(v_2), .v_3(v_3), .z(z),
-        .SHBCD(SHBCD), .LD(LD), .SHBIN(SHBIN), .LD1(LD1), .LD2(LD2), .LD3(LD3), .DECC(DECC),
+        .SHIN(SHBCD), .LD(LD), .SHRES(SHBIN), .LD_2(LD1), .LD_3(LD2), .LD_4(LD3), .DECC(DECC),
         .done(done)
     );
 
