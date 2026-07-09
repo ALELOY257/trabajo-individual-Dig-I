@@ -62,28 +62,28 @@ module bcd2bin_top_TB;
         // #20;
 
         // 4. Test case 2: Convert BCD 0x123 to binary 123
-        $display("Starting conversion for BCD 0x123 (expected binary 123)...");
-        bcd_in = 12'h123;
-        init = 1;
-        #CLK_PERIOD;
-        init = 0;
-        #10;
-        // Wait for conversion to finish
-        wait (done);
-        $display("Conversion done. Binary result: %d (0x%h)", res, res); // Should be 123
-        #20;
-
-        // 5. Test case 3: Convert BCD 0x255 to binary 255
-        // $display("Starting conversion for BCD 0x255 (expected binary 255)...");
-        // bcd_in = 12'h255;
+        // $display("Starting conversion for BCD 0x123 (expected binary 123)...");
+        // bcd_in = 12'h123;
         // init = 1;
         // #CLK_PERIOD;
         // init = 0;
-
+        // #10;
         // // Wait for conversion to finish
         // wait (done);
-        // $display("Conversion done. Binary result: %d (0x%h)", res, res); // Should be 255
+        // $display("Conversion done. Binary result: %d (0x%h)", res, res); // Should be 123
         // #20;
+
+        // 5. Test case 3: Convert BCD 0x255 to binary 255
+        $display("Starting conversion for BCD 0x255 (expected binary 255)...");
+        bcd_in = 12'h255;
+        init = 1;
+        #CLK_PERIOD;
+        init = 0;
+
+        // // Wait for conversion to finish
+        wait (done);
+        $display("Conversion done. Binary result: %d (0x%h)", res, res); // Should be 255
+        #20;
 
         // 6. Test case 4: Convert BCD 0x999 to binary 999
         // $display("Starting conversion for BCD 0x999 (expected binary 999)...");
