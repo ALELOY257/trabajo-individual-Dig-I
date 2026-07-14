@@ -55,7 +55,7 @@ module bin2bcd_top_TB;
         // #CLK_PERIOD;
         // init = 0;
         $display("Starting conversion for 97 (01100001)...");
-        bcd_in = 8'd97;
+        bcd_in = 8'b01000011;
         init = 1;
         #CLK_PERIOD;
         init = 0;

@@ -30,7 +30,7 @@ par = 8'b00000000;
 rst = 0;
 
 @(negedge clk);
-par = 8'b10101011;
+par = 8'b10101011; // debe dar 1
 
 wait(done);
 
